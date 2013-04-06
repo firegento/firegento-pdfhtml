@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <FireGento_PdfHtml>
+            <version>0.1.0</version>
+        </FireGento_PdfHtml>
+    </modules>
+    <global>
+        <models>
+            <firegento_pdfhtml>
+                <class>FireGento_PdfHtml_Model</class>
+            </firegento_pdfhtml>
+        </models>
+        <pdf>
+            <firegento_engines>
+                <firegento_pdfhtml>
+                    <class>firegento_pdfhtml/engine_invoice_default</class>
+                    <label>Html -> Pdf rendering</label>
+                </firegento_pdfhtml>
+            </firegento_engines>
+        </pdf>
+    </global>
+</config>

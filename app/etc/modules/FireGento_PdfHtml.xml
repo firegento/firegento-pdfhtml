@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <FireGento_PdfHtml>
+            <codePool>community</codePool>
+            <active>true</active>
+            <depends>
+                <FireGento_Pdf/>
+            </depends>
+        </FireGento_PdfHtml>
+    </modules>
+</config>

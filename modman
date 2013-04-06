@@ -1,0 +1,3 @@
+app/code/community/FireGento/PdfHtml/       app/code/community/FireGento/PdfHtml/
+app/etc/modules/FireGento_PdfHtml.xml       app/etc/modules/FireGento_PdfHtml.xml
+lib/dompdf/                                 lib/dompdf/
