@@ -34,12 +34,15 @@
 class FireGento_PdfHtml_Model_Engine_Invoice_Default
 {
     /**
-     * Return pdf file.
+     * Return pdf content stream.
      *
      * @param array $invoices
+     * @return FireGento_PdfHtml_Model_Engine_Pdf
      */
     public function getPdf($invoices = array())
     {
+        $html = '';
+
         foreach ($invoices as $invoice) {
             if ($invoice->getStoreId()) {
                 Mage::app()->getLocale()->emulate($invoice->getStoreId());
@@ -52,14 +55,12 @@ class FireGento_PdfHtml_Model_Engine_Invoice_Default
             $block = Mage::app()->getLayout()->setArea('admin')->createBlock('core/template');
             $block->setData('area', 'frontend');
             $block->setTemplate('firegento/pdfhtml/invoice.phtml');
-            $html = $block->renderView();
-
-            #$html = '<html><body><h1>Test</h1></body></html>';
-
-            /** @var $pdf FireGento_PdfHtml_Model_Engine_Pdf */
-            $pdf = Mage::getModel('firegento_pdfhtml/engine_pdf');
-            $pdf->setHtml($html);
-            return $pdf;
+            $html .= $block->renderView();
         }
+
+        /** @var $pdf FireGento_PdfHtml_Model_Engine_Pdf */
+        $pdf = Mage::getModel('firegento_pdfhtml/engine_pdf');
+        $pdf->setHtml($html);
+        return $pdf;
     }
 }
