@@ -46,12 +46,20 @@ class FireGento_PdfHtml_Model_Engine_Invoice_Default
                 Mage::app()->setCurrentStore($invoice->getStoreId());
             }
 
-
             $order = $invoice->getOrder();
 
+            /** @var $block Mage_Core_Block_Template */
+            $block = Mage::app()->getLayout()->setArea('admin')->createBlock('core/template');
+            $block->setData('area', 'frontend');
+            $block->setTemplate('firegento/pdfhtml/invoice.phtml');
+            $html = $block->renderView();
 
-            $html = '<html><body><h1>Test</h1></body></html>';
+            #$html = '<html><body><h1>Test</h1></body></html>';
 
+            /** @var $pdf FireGento_PdfHtml_Model_Engine_Pdf */
+            $pdf = Mage::getModel('firegento_pdfhtml/engine_pdf');
+            $pdf->setHtml($html);
+            return $pdf;
         }
     }
 }

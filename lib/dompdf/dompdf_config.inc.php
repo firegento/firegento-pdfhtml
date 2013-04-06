@@ -317,7 +317,7 @@ def("DOMPDF_ENABLE_AUTOLOAD", true);
  *
  * @var bool
  */
-def("DOMPDF_AUTOLOAD_PREPEND", false);
+def("DOMPDF_AUTOLOAD_PREPEND", true);
 
 /**
  * Use the more-than-experimental HTML5 Lib parser
