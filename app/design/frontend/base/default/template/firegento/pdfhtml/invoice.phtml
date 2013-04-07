@@ -3,6 +3,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <style>
+
+            /*@page { size:3in 3in;}*/
+
             /** PDF Styles **/
             /**
              * Rules
@@ -192,19 +195,19 @@
                             <tbody>
                                 <tr>
                                     <th>Zwischensumme:</th>
-                                    <td>29,41 €</td>
+                                    <td class="a-right">29,41 €</td>
                                 </tr>
                                 <tr>
                                     <th>Versand:</th>
-                                    <td>8,41 €</td>
+                                    <td class="a-right">8,41 €</td>
                                 </tr>
                                 <tr>
                                     <th>Zusätzliche Steuern 19%</th>
-                                    <td>3,19 €</td>
+                                    <td class="a-right">3,19 €</td>
                                 </tr>
                                 <tr>
                                     <th>Gesamtsumme</th>
-                                    <td>45,00 €</td>
+                                    <td class="a-right">45,00 €</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -225,21 +228,26 @@
 
                 // Set default values
                 $font = Font_Metrics::get_font("arial", "bold");
+                $defaultColor = array(0, 0, 0);
                 $defaultLeftMargin = 22;
                 $defaultLineHeight = 12;
                 $footerTextStartsAtY = 700;
 
+
                 // Draw separator line
-                $pdf->line($defaultLeftMargin, 690, $pdf->get_width() - $defaultLeftMargin, 690, array(0,0,0), 0.1);
+                $pdf->line($defaultLeftMargin, 690, $pdf->get_width() - $defaultLeftMargin, 690, $defaultColor, 1);
+                // Adding a white box, since there is a bug in dompdf that renders the 1px line above as 3px (300% zoom)
+                // This rectangle cuts off the extra 2px.
+                $pdf->rectangle($defaultLeftMargin, 691, $pdf->get_width() - (2 * $defaultLeftMargin), 2, array(1,1,1), 3);
 
                 // Address
-                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY, "Musterfirma GmbH", $font, 7, array(0,0,0));
-                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY + $defaultLineHeight, "Musterstr. 1", $font, 7, array(0,0,0));
-                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY + (2 * $defaultLineHeight), "12345 Musterstadt", $font, 7, array(0,0,0));
+                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY, "Musterfirma GmbH", $font, 7, $defaultColor);
+                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY + $defaultLineHeight, "Musterstr. 1", $font, 7, $defaultColor);
+                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY + (2 * $defaultLineHeight), "12345 Musterstadt", $font, 7, $defaultColor);
 
                 // Email
-                $pdf->page_text(118, $footerTextStartsAtY, "E-Mail:", $font, 7, array(0,0,0));
-                $pdf->page_text(160, $footerTextStartsAtY, "info@musterdomain.de", $font, 7, array(0,0,0));
+                $pdf->page_text(118, $footerTextStartsAtY, "E-Mail:", $font, 7, $defaultColor);
+                $pdf->page_text(160, $footerTextStartsAtY, "info@musterdomain.de", $font, 7, $defaultColor);
 
                 // Add page count
                 $pageCountText = "Seite " . $pdf->get_page_number();
@@ -247,7 +255,7 @@
                 $pageCountIndent = 30;
                 $pageCountX = $pdf->get_width() - $textWidth - $defaultLeftMargin - $pageCountIndent;
 
-                $pdf->page_text($pageCountX, $footerTextStartsAtY - 26, $pageCountText, $font, 10, array(0,0,0));
+                $pdf->page_text($pageCountX, $footerTextStartsAtY - 26, $pageCountText, $font, 10, $defaultColor);
             }
         </script>
 
