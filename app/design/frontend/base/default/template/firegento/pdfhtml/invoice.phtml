@@ -219,5 +219,23 @@
             Dies ist ein Test.
         </p>
 
+        <script type="text/php">
+
+            if (isset($pdf)) {
+                $font = Font_Metrics::get_font("arial", "bold");
+
+                $pdf->line(22, 690, $pdf->get_width() - 22, 690, array(0,0,0), 0.1);
+
+                $pdf->page_text(22, 700, "Musterfirma GmbH", $font, 7, array(0,0,0));
+                $pdf->page_text(22, 712, "Musterstr. 1", $font, 7, array(0,0,0));
+                $pdf->page_text(22, 724, "12345 Musterstadt", $font, 7, array(0,0,0));
+
+                $pdf->page_text(118, 700, "E-Mail:", $font, 7, array(0,0,0));
+                $pdf->page_text(160, 700, "info@musterdomain.de", $font, 7, array(0,0,0));
+
+                $pdf->page_text($pdf->get_width() - 50 - 22, 674, "Seite " . $pdf->get_page_number(), $font, 10, array(0,0,0));
+            }
+        </script>
+
     </body>
 </html>
