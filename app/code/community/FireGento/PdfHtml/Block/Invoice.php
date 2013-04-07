@@ -33,6 +33,18 @@
  */
 class FireGento_PdfHtml_Block_Invoice extends Mage_Sales_Block_Order_Print_Invoice
 {
+    public function getLogoUrl()
+    {
+        $storeId = $this->getOrder()->getStoreId();
+
+        $image = Mage::getStoreConfig('sales/identity/logo', $storeId);
+        if ($image && file_exists(Mage::getBaseDir('media', $storeId) . '/sales/store/logo/' . $image)) {
+            $image = Mage::getBaseDir('media', $storeId) . '/sales/store/logo/' . $image;
+        }
+
+        return $image;
+    }
+
     /**
      * Return notes.
      *
