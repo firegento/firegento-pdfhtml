@@ -247,8 +247,8 @@
 
                 // Address
                 $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY, "Musterfirma GmbH", $font, 7, $defaultColor);
-                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY + $defaultLineHeight, "Musterstr. 1", $font, 7, $defaultColor);
-                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY + (2 * $defaultLineHeight), "12345 Musterstadt", $font, 7, $defaultColor);
+                $pdf->page_text($defaultLeftMargin, ($footerTextStartsAtY + $defaultLineHeight), "Musterstr. 1", $font, 7, $defaultColor);
+                $pdf->page_text($defaultLeftMargin, ($footerTextStartsAtY + 2 * $defaultLineHeight), "12345 Musterstadt", $font, 7, $defaultColor);
 
                 // Email
                 $pdf->page_text(118, $footerTextStartsAtY, "E-Mail:", $font, 7, $defaultColor);
