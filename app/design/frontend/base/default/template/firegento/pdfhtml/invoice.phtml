@@ -1,4 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<h1>TEST</h1>
-<p>This is a test.</p>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <style>
+            /** PDF Styles **/
+            /**
+             * Rules
+             * - no floats
+             * - no position: absolute
+             **/
+            html, body {
+                font-family: Arial, sans-serif;
+                color: #000;
+                font-size: 12px;
+                line-height: 16px;
+            }
+
+            body {
+                margin: 18pt 18pt 24pt 18pt;
+            }
+
+            h1 {
+                font-size: 18px;
+                line-height: 22px;
+                margin: 50px 0 30px;
+            }
+
+            p {
+                margin: 0;
+            }
+
+            th, td {
+                text-align: left;
+                vertical-align: top;
+            }
+
+            th {
+                font-weight: normal;
+            }
+
+            .a-center {
+                text-align: center;
+            }
+
+            .a-right {
+                text-align: right;
+            }
+
+            .nb {
+                white-space: nowrap;
+            }
+
+            .intro {
+                width: 100%;
+            }
+
+            .from-address {
+                font-size: 8px;
+                line-height: 12px;
+                margin: 0;
+            }
+
+            .metainfo td {
+                text-align: right;
+            }
+
+            .products {
+                width: 765pt !important;
+                margin: 0 0 90pt;
+            }
+            .products thead {
+                background: #ccc;
+            }
+            .products th,
+            .products td{
+                padding: 2px 3px 1px;
+            }
+
+            .totals-cell {
+                border-top: 2px solid #ccc;
+                padding: 0 !important;
+            }
+            .totals {
+
+            }
+
+
+            /** END PDF Styles **/
+        </style>
+    </head>
+    <body>
+        <div class="logo">
+            ###LOGO####
+        </div>
+
+        <table cellpadding="0" cellspacing="0" border="0" class="intro">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="address">
+                            <span class="from-address">aijko GmbH | Teststr. 1 | 99999 Musterhausen</span>
+                            <p>
+                                Gerrit Pechmann<br />
+                                Teststr. 1 Musterhausen<br />
+                                Nordrhein-Westfalen, 12345<br />
+                                Deutschland<br />
+                                T: 123456
+                            </p>
+                        </div>
+
+
+                        <h1>Rechnung</h1>
+                    </td>
+                    <td>
+                        <table class="metainfo" cellpadding="0" cellspacing="0" border="0" align="right">
+                            <tbody>
+                                <tr>
+                                    <th>Rechnungsnummer:</th>
+                                    <td>100000007</td>
+                                </tr>
+                                <tr>
+                                    <th>Bestellung #</th>
+                                    <td>10000008</td>
+                                </tr>
+                                <tr>
+                                    <th>Kundennummer</th>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <th>Rechnungsdatum</th>
+                                    <td>23.03.2013</td>
+                                </tr>
+                                <tr>
+                                    <th>Zahlungsart</th>
+                                    <td>Check / Money order</td>
+                                </tr>
+                                <tr>
+                                    <th>Shipping method</th>
+                                    <td>Flat Rate - Fixed</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <table cellpadding="0" cellspacing="0" border="0" class="products">
+            <thead>
+                <tr>
+                    <th width="1">Pos.</th>
+                    <th width="1">Artikelnummer</th>
+                    <th>Beschreibung</th>
+                    <th class="nb" width="1">Preis (Netto)</th>
+                    <th width="1">Menge</th>
+                    <th width="1">MwSt.</th>
+                    <th width="1">Gesamt</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td class="nb">123</td>
+                    <td scope="row">Test Produkt</td>
+                    <td class="nb a-right">8,40 €</td>
+                    <td class="a-center">1</td>
+                    <td class="nb a-right">1,60 €</td>
+                    <td class="nb a-right">10,00 €</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td class="nb">computer-0002-123</td>
+                    <td scope="row">
+                        Computer
+                        Prozessor
+                        1 x Test Produkt 2
+                        Festplatte
+                        1 x Test Produkt
+                    </td>
+                    <td class="nb a-right">12,61 €</td>
+                    <td class="a-center">1</td>
+                    <td class="nb a-right">2,40 €</td>
+                    <td class="nb a-right">8,40 €</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="7" width="100%" class="totals-cell">
+                        <table cellpadding="0" cellmargin="0" border="0" class="totals" align="right">
+                            <tbody>
+                                <tr>
+                                    <th>Zwischensumme:</th>
+                                    <td>29,41 €</td>
+                                </tr>
+                                <tr>
+                                    <th>Versand:</th>
+                                    <td>8,41 €</td>
+                                </tr>
+                                <tr>
+                                    <th>Zusätzliche Steuern 19%</th>
+                                    <td>3,19 €</td>
+                                </tr>
+                                <tr>
+                                    <th>Gesamtsumme</th>
+                                    <td>45,00 €</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <p>
+            Die Rechnung ist sofort fällig.<br />
+            Rechnungsdatum ist gleich dem Lieferdatum.<br />
+            Dies ist ein Test.
+        </p>
+
+    </body>
 </html>
