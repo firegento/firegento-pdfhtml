@@ -56,7 +56,7 @@
 
             .logo {
                 text-align: right;
-                margin: 0 0 10pt;
+                height: 79pt;
             }
 
             .intro {
@@ -112,7 +112,11 @@
 
         <?php if ($this->getLogoUrl()): ?>
         <div class="logo">
-            <img src="<?php echo $this->getLogoUrl() ?>" width="<?php echo $this->getLogoWidth() ?>" height="<?php echo $this->getLogoHeight() ?>" />
+            <table cellspacing="0" cellpadding="0" border="0" align="right">
+                <tr>
+                    <td><img src="<?php echo $this->getLogoUrl() ?>" width="<?php echo $this->getLogoWidth() ?>" height="<?php echo $this->getLogoHeight() ?>" /></td>
+                </tr>
+            </table>
         </div>
         <?php endif ?>
 
