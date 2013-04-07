@@ -222,18 +222,32 @@
         <script type="text/php">
 
             if (isset($pdf)) {
+
+                // Set default values
                 $font = Font_Metrics::get_font("arial", "bold");
+                $defaultLeftMargin = 22;
+                $defaultLineHeight = 12;
+                $footerTextStartsAtY = 700;
 
-                $pdf->line(22, 690, $pdf->get_width() - 22, 690, array(0,0,0), 0.1);
+                // Draw separator line
+                $pdf->line($defaultLeftMargin, 690, $pdf->get_width() - $defaultLeftMargin, 690, array(0,0,0), 0.1);
 
-                $pdf->page_text(22, 700, "Musterfirma GmbH", $font, 7, array(0,0,0));
-                $pdf->page_text(22, 712, "Musterstr. 1", $font, 7, array(0,0,0));
-                $pdf->page_text(22, 724, "12345 Musterstadt", $font, 7, array(0,0,0));
+                // Address
+                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY, "Musterfirma GmbH", $font, 7, array(0,0,0));
+                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY + $defaultLineHeight, "Musterstr. 1", $font, 7, array(0,0,0));
+                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY + (2 * $defaultLineHeight), "12345 Musterstadt", $font, 7, array(0,0,0));
 
-                $pdf->page_text(118, 700, "E-Mail:", $font, 7, array(0,0,0));
-                $pdf->page_text(160, 700, "info@musterdomain.de", $font, 7, array(0,0,0));
+                // Email
+                $pdf->page_text(118, $footerTextStartsAtY, "E-Mail:", $font, 7, array(0,0,0));
+                $pdf->page_text(160, $footerTextStartsAtY, "info@musterdomain.de", $font, 7, array(0,0,0));
 
-                $pdf->page_text($pdf->get_width() - 50 - 22, 674, "Seite " . $pdf->get_page_number(), $font, 10, array(0,0,0));
+                // Add page count
+                $pageCountText = "Seite " . $pdf->get_page_number();
+                $textWidth = Font_Metrics::get_text_width($pageCountText, $font, 10);
+                $pageCountIndent = 30;
+                $pageCountX = $pdf->get_width() - $textWidth - $defaultLeftMargin - $pageCountIndent;
+
+                $pdf->page_text($pageCountX, $footerTextStartsAtY - 26, $pageCountText, $font, 10, array(0,0,0));
             }
         </script>
 
