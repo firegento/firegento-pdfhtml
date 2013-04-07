@@ -240,13 +240,25 @@
 
             if (isset($pdf)) {
 
-                // Set default values
+                // Labels
+                $emailLabel = "E-Mail:";
+                $emailValue = "info@musterdomain.de";
+                $streetValue = "Musterstr. 1";
+                $firmName = "Musterfirma GmbH";
+                $cityValue = "12345 Musterstadt";
+                $pageLabel = "Seite %s";
+
+                // Set default metrics
                 $font = Font_Metrics::get_font("arial", "bold");
                 $defaultColor = array(0, 0, 0);
+                $defaultFontSize = 7;
                 $defaultLeftMargin = 22;
                 $defaultLineHeight = 12;
                 $footerTextStartsAtY = 700;
 
+                // -------
+                // Layout processing starts here
+                //
 
                 // Draw separator line
                 $pdf->line($defaultLeftMargin, 690, $pdf->get_width() - $defaultLeftMargin, 690, $defaultColor, 1);
@@ -255,16 +267,20 @@
                 $pdf->rectangle($defaultLeftMargin, 691, $pdf->get_width() - (2 * $defaultLeftMargin), 2, array(1,1,1), 3);
 
                 // Address
-                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY, "Musterfirma GmbH", $font, 7, $defaultColor);
-                $pdf->page_text($defaultLeftMargin, ($footerTextStartsAtY + $defaultLineHeight), "Musterstr. 1", $font, 7, $defaultColor);
-                $pdf->page_text($defaultLeftMargin, ($footerTextStartsAtY + 2 * $defaultLineHeight), "12345 Musterstadt", $font, 7, $defaultColor);
+                $pdf->page_text($defaultLeftMargin, $footerTextStartsAtY, $firmName, $font, $defaultFontSize, $defaultColor);
+                $pdf->page_text($defaultLeftMargin, ($footerTextStartsAtY + $defaultLineHeight), $streetValue, $font, $defaultFontSize, $defaultColor);
+                $pdf->page_text($defaultLeftMargin, ($footerTextStartsAtY + 2 * $defaultLineHeight), $cityValue, $font, $defaultFontSize, $defaultColor);
 
                 // Email
-                $pdf->page_text(118, $footerTextStartsAtY, "E-Mail:", $font, 7, $defaultColor);
-                $pdf->page_text(160, $footerTextStartsAtY, "info@musterdomain.de", $font, 7, $defaultColor);
+                $emailLabelStartAtX = Font_Metrics::get_text_width($firmName, $font, $defaultFontSize) + 60;
+
+                $pdf->page_text($emailLabelStartAtX, $footerTextStartsAtY, $emailLabel, $font, $defaultFontSize, $defaultColor);
+
+                $emailValueStartAtX = $emailLabelStartAtX + Font_Metrics::get_text_width($emailLabel, $font, $defaultFontSize) + 20;
+                $pdf->page_text($emailValueStartAtX, $footerTextStartsAtY, $emailValue, $font, $defaultFontSize, $defaultColor);
 
                 // Add page count
-                $pageCountText = "Seite " . $pdf->get_page_number();
+                $pageCountText = sprintf($pageLabel, $pdf->get_page_number());
                 $textWidth = Font_Metrics::get_text_width($pageCountText, $font, 10);
                 $pageCountIndent = 30;
                 $pageCountX = $pdf->get_width() - $textWidth - $defaultLeftMargin - $pageCountIndent;
