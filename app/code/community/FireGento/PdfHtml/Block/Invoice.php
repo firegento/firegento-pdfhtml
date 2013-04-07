@@ -33,6 +33,15 @@
  */
 class FireGento_PdfHtml_Block_Invoice extends Mage_Sales_Block_Order_Print_Invoice
 {
+    const LOGO_MAX_WIDTH = 400;
+
+    const LOGO_MAX_HEIGHT = 100;
+
+    /**
+     * Return url to logo.
+     *
+     * @return string
+     */
     public function getLogoUrl()
     {
         $storeId = $this->getOrder()->getStoreId();
@@ -43,6 +52,30 @@ class FireGento_PdfHtml_Block_Invoice extends Mage_Sales_Block_Order_Print_Invoi
         }
 
         return $image;
+    }
+
+    /**
+     * Return scaled logo width.
+     *
+     * @return int
+     */
+    public function getLogoWidth()
+    {
+        $image = $this->getLogoUrl();
+        list ($width, $height) = Mage::helper('firegento_pdf')->getScaledImageSize($image, self::LOGO_MAX_WIDTH, self::LOGO_MAX_HEIGHT);
+        return $width;
+    }
+
+    /**
+     * Return scaled logo height.
+     *
+     * @return int
+     */
+    public function getLogoHeight()
+    {
+        $image = $this->getLogoUrl();
+        list ($width, $height) = Mage::helper('firegento_pdf')->getScaledImageSize($image, self::LOGO_MAX_WIDTH, self::LOGO_MAX_HEIGHT);
+        return $height;
     }
 
     /**
