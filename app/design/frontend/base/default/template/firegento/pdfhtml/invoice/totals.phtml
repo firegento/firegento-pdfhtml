@@ -1,0 +1,16 @@
+<?php
+/**
+ * @var $this Mage_Sales_Block_Order_Totals
+ * @see Mage_Sales_Block_Order_Totals
+ */
+?>
+<?php foreach ($this->getTotals() as $_code => $_total): ?>
+    <?php if ($_total->getBlockName()): ?>
+        <?php echo $this->getChildHtml($_total->getBlockName(), false) ?>
+    <?php else: ?>
+        <tr>
+            <th><?php echo $this->escapeHtml($_total->getLabel()) ?></th>
+            <td><?php echo $this->formatValue($_total) ?></td>
+        </tr>
+    <?php endif ?>
+<?php endforeach ?>

@@ -93,6 +93,14 @@
         </style>
     </head>
     <body>
+<?php $_order = $this->getOrder() ?>
+<?php $_invoice = $this->getInvoice() ?>
+<?php if($_invoice): ?>
+    <?php $_invoices = array($_invoice); ?>
+<?php else: ?>
+    <?php $_invoices = $_order->getInvoiceCollection() ?>
+<?php endif ?>
+<?php foreach ($_invoices as $_invoice): ?>
         <div class="logo">
             ###LOGO####
         </div>
@@ -102,46 +110,58 @@
                 <tr>
                     <td>
                         <div class="address">
-                            <span class="from-address">aijko GmbH | Teststr. 1 | 99999 Musterhausen</span>
+                            <?php if (Mage::getStoreConfig('sales_pdf/firegento_pdf/sender_address_bar') != ''): ?>
+                            <span class="from-address"><?php echo Mage::getStoreConfig('sales_pdf/firegento_pdf/sender_address_bar') ?></span>
+                            <?php endif ?>
                             <p>
-                                Gerrit Pechmann<br />
-                                Teststr. 1 Musterhausen<br />
-                                Nordrhein-Westfalen, 12345<br />
-                                Deutschland<br />
-                                T: 123456
+                                <?php echo $_order->getBillingAddress()->format('html') ?>
                             </p>
                         </div>
 
-
-                        <h1>Rechnung</h1>
+                        <h1><?php echo $this->__('Invoice') ?></h1>
                     </td>
                     <td>
                         <table class="metainfo" cellpadding="0" cellspacing="0" border="0" align="right">
                             <tbody>
                                 <tr>
-                                    <th>Rechnungsnummer:</th>
-                                    <td>100000007</td>
+                                    <th><?php echo $this->__('Invoice number:') ?></th>
+                                    <td><?php echo $_invoice->getIncrementId() ?></td>
                                 </tr>
+                                <?php $_putOrderId = $this->helper('firegento_pdf')->putOrderId($_order, 'invoice') ?>
+                                <?php if ($_putOrderId): ?>
                                 <tr>
-                                    <th>Bestellung #</th>
-                                    <td>10000008</td>
+                                    <th><?php echo $this->__('Order number:') ?></th>
+                                    <td><?php echo $_putOrderId ?></td>
                                 </tr>
+                                <?php endif ?>
+                                <?php if ($_order->getCustomerId() != ''): ?>
                                 <tr>
-                                    <th>Kundennummer</th>
-                                    <td>1</td>
+                                    <th><?php echo $this->__('Customer number:') ?></th>
+                                    <td><?php echo $_order->getCustomerId() ?></td>
                                 </tr>
+                                <?php endif ?>
+                                <?php if (!Mage::getStoreConfigFlag('sales/general/hide_customer_ip', $_order->getStoreId())): ?>
                                 <tr>
-                                    <th>Rechnungsdatum</th>
-                                    <td>23.03.2013</td>
+                                    <th><?php echo $this->__('Customer IP:') ?></th>
+                                    <td><?php echo $_order->getRemoteIp() ?></td>
                                 </tr>
+                                <?php endif ?>
                                 <tr>
-                                    <th>Zahlungsart</th>
-                                    <td>Check / Money order</td>
+                                    <th><?php echo $this->__('Invoice date:') ?></th>
+                                    <td><?php echo Mage::helper('core')->formatDate($_invoice->getCreatedAtDate(), 'medium', false) ?></td>
                                 </tr>
+                                <?php if (Mage::getStoreConfig('sales_pdf/invoice/payment_method_position', $_order->getStoreId()) == FireGento_Pdf_Model_System_Config_Source_Payment::POSITION_HEADER): ?>
                                 <tr>
-                                    <th>Shipping method</th>
-                                    <td>Flat Rate - Fixed</td>
+                                    <th><?php echo $this->__('Payment method:') ?></th>
+                                    <td><?php echo $_order->getPayment()->getMethodInstance()->getTitle() ?></td>
                                 </tr>
+                                <?php endif ?>
+                                <?php if (Mage::getStoreConfig('sales_pdf/invoice/shipping_method_position', $_order->getStoreId()) == FireGento_Pdf_Model_System_Config_Source_Shipping::POSITION_HEADER): ?>
+                                <tr>
+                                    <th><?php echo $this->__('Shipping method:') ?></th>
+                                    <td><?php echo $_order->getShippingDescription() ?></td>
+                                </tr>
+                                <?php endif ?>
                             </tbody>
                         </table>
                     </td>
@@ -193,22 +213,7 @@
                     <td colspan="7" width="100%" class="totals-cell">
                         <table cellpadding="0" cellmargin="0" border="0" class="totals" align="right">
                             <tbody>
-                                <tr>
-                                    <th>Zwischensumme:</th>
-                                    <td class="a-right">29,41 €</td>
-                                </tr>
-                                <tr>
-                                    <th>Versand:</th>
-                                    <td class="a-right">8,41 €</td>
-                                </tr>
-                                <tr>
-                                    <th>Zusätzliche Steuern 19%</th>
-                                    <td class="a-right">3,19 €</td>
-                                </tr>
-                                <tr>
-                                    <th>Gesamtsumme</th>
-                                    <td class="a-right">45,00 €</td>
-                                </tr>
+                                <?php echo $this->getInvoiceTotalsHtml($_invoice) ?>
                             </tbody>
                         </table>
                     </td>
@@ -217,9 +222,7 @@
         </table>
 
         <p>
-            Die Rechnung ist sofort fällig.<br />
-            Rechnungsdatum ist gleich dem Lieferdatum.<br />
-            Dies ist ein Test.
+            <?php echo $this->getNote() ?>
         </p>
 
         <script type="text/php">
@@ -258,6 +261,6 @@
                 $pdf->page_text($pageCountX, $footerTextStartsAtY - 26, $pageCountText, $font, 10, $defaultColor);
             }
         </script>
-
+<?php endforeach ?>
     </body>
 </html>

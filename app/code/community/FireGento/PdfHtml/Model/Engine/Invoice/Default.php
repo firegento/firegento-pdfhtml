@@ -51,11 +51,29 @@ class FireGento_PdfHtml_Model_Engine_Invoice_Default
 
             $order = $invoice->getOrder();
 
+            Mage::unregister('current_invoice');
+            Mage::register('current_invoice', $invoice);
+            Mage::register('current_order', $order);
+
             /** @var $block Mage_Core_Block_Template */
-            $block = Mage::app()->getLayout()->setArea('admin')->createBlock('core/template');
-            $block->setData('area', 'frontend');
-            $block->setTemplate('firegento/pdfhtml/invoice.phtml');
-            $html .= $block->renderView();
+            $invoiceBlock = Mage::app()->getLayout()->createBlock('firegento_pdfhtml/invoice');
+            $invoiceBlock->setData('area', 'frontend')
+                ->setTemplate('firegento/pdfhtml/invoice.phtml');
+
+            $totalsBlock = Mage::app()->getLayout()->createBlock('sales/order_invoice_totals', 'invoice_totals');
+            $totalsBlock->setData('area', 'frontend');
+            $totalsBlock->setTemplate('firegento/pdfhtml/invoice/totals.phtml');
+            $invoiceBlock->append($totalsBlock);
+
+            $taxBlock = Mage::app()->getLayout()->createBlock('tax/sales_order_tax', 'tax');
+            $taxBlock->setData('area', 'frontend');
+            $taxBlock->setTemplate('tax/order/tax.phtml');
+            $totalsBlock->append($taxBlock);
+
+            $html .= $invoiceBlock->renderView();
+
+            Mage::unregister('current_invoice');
+            Mage::unregister('current_order');
         }
 
         /** @var $pdf FireGento_PdfHtml_Model_Engine_Pdf */

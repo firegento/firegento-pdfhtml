@@ -6,6 +6,11 @@
         </FireGento_PdfHtml>
     </modules>
     <global>
+        <blocks>
+            <firegento_pdfhtml>
+                <class>FireGento_PdfHtml_Block</class>
+            </firegento_pdfhtml>
+        </blocks>
         <models>
             <firegento_pdfhtml>
                 <class>FireGento_PdfHtml_Model</class>
