@@ -54,6 +54,11 @@
                 white-space: nowrap;
             }
 
+            .logo {
+                text-align: right;
+                margin: 0 0 10pt;
+            }
+
             .intro {
                 width: 100%;
             }
@@ -64,6 +69,9 @@
                 margin: 0;
             }
 
+            .metainfo {
+                margin-top: 40pt;
+            }
             .metainfo td {
                 text-align: right;
             }
@@ -82,7 +90,7 @@
 
             .totals-cell {
                 border-top: 2px solid #ccc;
-                padding: 0 !important;
+                padding: 20pt 0 0 !important;
             }
             .totals {
 
@@ -101,6 +109,7 @@
     <?php $_invoices = $_order->getInvoiceCollection() ?>
 <?php endif ?>
 <?php foreach ($_invoices as $_invoice): ?>
+
         <?php if ($this->getLogoUrl()): ?>
         <div class="logo">
             <img src="<?php echo $this->getLogoUrl() ?>" />
