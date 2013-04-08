@@ -51,27 +51,32 @@ class FireGento_PdfHtml_Model_Engine_Invoice_Default
 
             $order = $invoice->getOrder();
 
+            // Register invoice and order object. This is kindof dirty but we need this to use
+            // given Magento core blocks that are referencing this objects through the registry.
+            // TODO: Maybe there is a better way?
             Mage::unregister('current_invoice');
             Mage::register('current_invoice', $invoice);
             Mage::register('current_order', $order);
 
-            /** @var $block Mage_Core_Block_Template */
-            $invoiceBlock = Mage::app()->getLayout()->createBlock('firegento_pdfhtml/invoice');
-            $invoiceBlock->setData('area', 'frontend')
-                ->setTemplate('firegento/pdfhtml/invoice.phtml');
+            // Temporarily change area.
+            $area = Mage::getSingleton('core/design_package')->getArea();
+            Mage::getSingleton('core/design_package')->setArea('frontend');
 
-            $totalsBlock = Mage::app()->getLayout()->createBlock('sales/order_invoice_totals', 'invoice_totals');
-            $totalsBlock->setData('area', 'frontend');
-            $totalsBlock->setTemplate('firegento/pdfhtml/invoice/totals.phtml');
-            $invoiceBlock->append($totalsBlock);
+            $layout = Mage::app()->getLayout();
+            $layout->setArea('frontend')->getUpdate()->load('firegento_pdfhtml_invoice');
 
-            $taxBlock = Mage::app()->getLayout()->createBlock('tax/sales_order_tax', 'tax');
-            $taxBlock->setData('area', 'frontend');
-            $taxBlock->setTemplate('tax/order/tax.phtml');
-            $totalsBlock->append($taxBlock);
+            $layout->generateXml()->generateBlocks();
+            $layout->addOutputBlock('root');
 
-            $html .= $invoiceBlock->renderView();
+            // Debug here to see what html is returned for rendering
+            // TODO: Remove this comment
+            $html = $layout->getOutput();
 
+            // Restore area.
+            Mage::getSingleton('core/design_package')->setArea($area);
+
+            // Unregister objects to store new one in next loop. See comment above why we need to use
+            // the registry for that.
             Mage::unregister('current_invoice');
             Mage::unregister('current_order');
         }

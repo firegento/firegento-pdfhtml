@@ -25,4 +25,13 @@
             </firegento_engines>
         </pdf>
     </global>
+    <frontend>
+        <layout>
+            <updates>
+                <firegento_pdfhtml>
+                    <file>firegento_pdfhtml.xml</file>
+                </firegento_pdfhtml>
+            </updates>
+        </layout>
+    </frontend>
 </config>

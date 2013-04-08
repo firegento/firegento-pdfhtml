@@ -35,7 +35,7 @@ class FireGento_PdfHtml_Block_Invoice extends Mage_Sales_Block_Order_Print_Invoi
 {
     const LOGO_MAX_WIDTH = 400;
 
-    const LOGO_MAX_HEIGHT = 100;
+    const LOGO_MAX_HEIGHT = 140;
 
     /**
      * Return url to logo.
@@ -102,5 +102,10 @@ class FireGento_PdfHtml_Block_Invoice extends Mage_Sales_Block_Order_Print_Invoi
         }
 
         return implode('<br />', $notes);
+    }
+
+    protected function _prepareLayout()
+    {
+
     }
 }

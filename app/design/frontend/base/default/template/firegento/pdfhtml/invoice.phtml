@@ -188,41 +188,48 @@
         <table cellpadding="0" cellspacing="0" border="0" class="products">
             <thead>
                 <tr>
-                    <th width="1">Pos.</th>
-                    <th width="1">Artikelnummer</th>
-                    <th>Beschreibung</th>
-                    <th class="nb" width="1">Preis (Netto)</th>
-                    <th width="1">Menge</th>
-                    <th width="1">MwSt.</th>
-                    <th width="1">Gesamt</th>
+                    <th width="1"><?php echo $this->__('Pos') ?></th>
+                    <th width="1"><?php echo $this->__('No.') ?></th>
+                    <th><?php echo $this->__('Description') ?></th>
+                    <th class="nb" width="1"><?php echo $this->__('Price (excl. tax)') ?></th>
+                    <th width="1"><?php echo $this->__('Qty') ?></th>
+                    <th width="1"><?php echo $this->__('Tax') ?></th>
+                    <th width="1"><?php echo $this->__('Total') ?></th>
                 </tr>
             </thead>
+            <?php $_items = $_invoice->getItemsCollection(); ?>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td class="nb">123</td>
-                    <td scope="row">Test Produkt</td>
-                    <td class="nb a-right">8,40 €</td>
-                    <td class="a-center">1</td>
-                    <td class="nb a-right">1,60 €</td>
-                    <td class="nb a-right">10,00 €</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td class="nb">computer-0002-123</td>
-                    <td scope="row">
-                        Computer
-                        Prozessor
-                        1 x Test Produkt 2
-                        Festplatte
-                        1 x Test Produkt
-                    </td>
-                    <td class="nb a-right">12,61 €</td>
-                    <td class="a-center">1</td>
-                    <td class="nb a-right">2,40 €</td>
-                    <td class="nb a-right">8,40 €</td>
-                </tr>
+            <?php foreach ($_items as $_item): ?>
+            <?php if ($_item->getOrderItem()->getParentItem()) continue; ?>
+            <?php echo $this->getItemHtml($_item) ?>
+            <?php endforeach; ?>
             </tbody>
+<!--            <tbody>-->
+<!--                <tr>-->
+<!--                    <td>1</td>-->
+<!--                    <td class="nb">123</td>-->
+<!--                    <td scope="row">Test Produkt</td>-->
+<!--                    <td class="nb a-right">8,40 €</td>-->
+<!--                    <td class="a-center">1</td>-->
+<!--                    <td class="nb a-right">1,60 €</td>-->
+<!--                    <td class="nb a-right">10,00 €</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>2</td>-->
+<!--                    <td class="nb">computer-0002-123</td>-->
+<!--                    <td scope="row">-->
+<!--                        Computer-->
+<!--                        Prozessor-->
+<!--                        1 x Test Produkt 2-->
+<!--                        Festplatte-->
+<!--                        1 x Test Produkt-->
+<!--                    </td>-->
+<!--                    <td class="nb a-right">12,61 €</td>-->
+<!--                    <td class="a-center">1</td>-->
+<!--                    <td class="nb a-right">2,40 €</td>-->
+<!--                    <td class="nb a-right">8,40 €</td>-->
+<!--                </tr>-->
+<!--            </tbody>-->
             <tfoot>
                 <tr>
                     <td colspan="7" width="100%" class="totals-cell">
